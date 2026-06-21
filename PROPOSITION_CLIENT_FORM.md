@@ -1,10 +1,12 @@
 # Google Form — Proposition client Money Tracker
 
-Contenu prêt à copier-coller dans Google Forms (forms.google.com → Nouveau formulaire).
-Les 3 maquettes visuelles à joindre sont dans `docs/design-mockups/` :
-- `design-a-indigo.png` (+ version mobile `design-a-indigo-mobile.png`)
-- `design-b-emeraude.png`
-- `design-c-ambre.png`
+Contenu prêt à copier-coller dans Google Forms (forms.google.com → Nouveau formulaire),
+**ou** à générer automatiquement avec `google_form_apps_script.gs` (voir ce fichier pour le mode d'emploi).
+
+Les 3 palettes de couleurs à joindre sont dans `docs/design-mockups/` :
+- `palette-a-indigo.png`
+- `palette-b-emeraude.png`
+- `palette-c-ambre.png`
 
 ---
 
@@ -24,9 +26,9 @@ Avant de finaliser votre application de suivi d'achat-revente, j'aimerais conna�
 
 > Joindre une image par option (capture du dashboard) :
 
-- 🟣 **Design A — Indigo Classique** *(image : design-a-indigo.png)* — Sobre, professionnel, violet/indigo sur fond clair.
-- 🟢 **Design B — Émeraude Premium** *(image : design-b-emeraude.png)* — Vert émeraude, évoque la croissance et l'argent.
-- 🟠 **Design C — Ambre Doré** *(image : design-c-ambre.png)* — Orange/doré, ambiance premium/luxe (montres, voitures).
+- 🟣 **Design A — Indigo Classique** *(image : palette-a-indigo.png)* — Sobre, professionnel, violet/indigo sur fond clair.
+- 🟢 **Design B — Émeraude Premium** *(image : palette-b-emeraude.png)* — Vert émeraude, évoque la croissance et l'argent.
+- 🟠 **Design C — Ambre Doré** *(image : palette-c-ambre.png)* — Orange/doré, ambiance premium/luxe (montres, voitures).
 - Autre (précisez la couleur ou l'ambiance souhaitée) — *texte libre*
 
 **Question 2 — Avez-vous une remarque sur le design (logo, style, ambiance) ?** (Réponse courte, facultatif)
