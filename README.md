@@ -39,6 +39,14 @@ Application mono-utilisateur construite avec Next.js (App Router), TypeScript, T
 
 6. Ouvrir [http://localhost:3000](http://localhost:3000) — redirige vers `/login`.
 
+## Fonctionnalités
+
+- Connexion mono-utilisateur (Supabase Auth)
+- Dashboard : KPIs (investi, ventes, profit, ROI, stock) + graphiques
+- Catégories : création, renommage, suppression, et page détail par catégorie listant tous ses articles
+- Articles (dépenses) : ajout, modification, suppression, recherche/filtres dans l'historique
+- Bouton « Vendu » sur chaque article en stock (historique et détail catégorie) : renseigne prix et date de revente et bascule le statut en un clic
+
 ## Structure
 
 ```
@@ -47,9 +55,10 @@ src/
 │   ├── login/                 ← connexion (email/password)
 │   ├── dashboard/
 │   │   ├── page.tsx            ← KPIs + graphiques
-│   │   ├── historique/         ← liste, recherche, filtres, édition/suppression
+│   │   ├── historique/         ← liste, recherche, filtres, édition/suppression, marquer vendu
 │   │   ├── categories/         ← CRUD catégories
-│   │   └── _components/        ← modal d'ajout, cartes KPI, graphiques
+│   │   │   └── [id]/           ← détail d'une catégorie : ses articles, ajout/édition/suppression, marquer vendu
+│   │   └── _components/        ← modal d'ajout, carte article (DepenseItem), cartes KPI, graphiques
 │   └── page.tsx                ← redirige vers /dashboard
 ├── lib/
 │   ├── actions/                ← Server Actions (depenses, categories, auth)
