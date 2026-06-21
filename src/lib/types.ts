@@ -23,3 +23,18 @@ export type Depense = {
 export type DepenseWithCategorie = Depense & {
   categorie: Categorie | null;
 };
+
+export type DepenseActionState = {
+  status: "idle" | "error" | "success";
+  error?: string;
+};
+
+export const depenseActionInitialState: DepenseActionState = { status: "idle" };
+
+export type CategorieActionState = {
+  status: "idle" | "error" | "success";
+  error?: string;
+  id?: string;
+};
+
+export const categorieActionInitialState: CategorieActionState = { status: "idle" };

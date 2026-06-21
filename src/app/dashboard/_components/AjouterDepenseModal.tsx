@@ -2,14 +2,15 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { creerDepense, modifierDepense } from "@/lib/actions/depenses";
+import { creerCategorie } from "@/lib/actions/categories";
 import {
-  creerDepense,
-  modifierDepense,
+  categorieActionInitialState,
   depenseActionInitialState,
+  type Categorie,
+  type Depense,
   type DepenseActionState,
-} from "@/lib/actions/depenses";
-import { creerCategorie, categorieActionInitialState } from "@/lib/actions/categories";
-import type { Categorie, Depense } from "@/lib/types";
+} from "@/lib/types";
 
 const NOUVELLE_CATEGORIE = "__nouvelle__";
 
@@ -17,10 +18,12 @@ export default function AjouterDepenseModal({
   onClose,
   categories,
   depense,
+  categorieIdParDefaut,
 }: {
   onClose: () => void;
   categories: Categorie[];
   depense?: Depense;
+  categorieIdParDefaut?: string;
 }) {
   const router = useRouter();
   const enEdition = Boolean(depense);
@@ -33,7 +36,7 @@ export default function AjouterDepenseModal({
   const [state, formAction, isPending] = useActionState(action, depenseActionInitialState);
 
   const [categorieSelectionnee, setCategorieSelectionnee] = useState(
-    depense?.categorie_id ?? ""
+    depense?.categorie_id ?? categorieIdParDefaut ?? ""
   );
   const [vendu, setVendu] = useState(depense?.statut === "vendu");
   const [nouvelleCategorieOuverte, setNouvelleCategorieOuverte] = useState(false);

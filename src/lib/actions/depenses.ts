@@ -2,14 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import type { Statut } from "@/lib/types";
-
-export type DepenseActionState = {
-  status: "idle" | "error" | "success";
-  error?: string;
-};
-
-export const depenseActionInitialState: DepenseActionState = { status: "idle" };
+import type { DepenseActionState, Statut } from "@/lib/types";
 
 function parseDepenseForm(formData: FormData) {
   const categorie_id = String(formData.get("categorie_id") ?? "") || null;
@@ -89,4 +82,22 @@ export async function supprimerDepense(id: string) {
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/historique");
+}
+
+export async function marquerVendu(id: string, prixRevente: number, dateRevente: string) {
+  if (!Number.isFinite(prixRevente) || prixRevente < 0) {
+    throw new Error("Le prix de revente est invalide.");
+  }
+  if (!dateRevente) throw new Error("La date de revente est requise.");
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("depenses")
+    .update({ statut: "vendu", prix_revente: prixRevente, date_revente: dateRevente })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/dashboard");
+  revalidatePath("/dashboard/historique");
+  revalidatePath("/dashboard/categories");
 }

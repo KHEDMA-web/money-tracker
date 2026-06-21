@@ -2,14 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-
-export type CategorieActionState = {
-  status: "idle" | "error" | "success";
-  error?: string;
-  id?: string;
-};
-
-export const categorieActionInitialState: CategorieActionState = { status: "idle" };
+import type { CategorieActionState } from "@/lib/types";
 
 function revalidateCategorie() {
   revalidatePath("/dashboard/categories");

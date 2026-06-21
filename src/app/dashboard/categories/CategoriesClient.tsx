@@ -1,14 +1,10 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  creerCategorie,
-  modifierCategorie,
-  supprimerCategorie,
-  categorieActionInitialState,
-} from "@/lib/actions/categories";
-import type { Categorie } from "@/lib/types";
+import { creerCategorie, modifierCategorie, supprimerCategorie } from "@/lib/actions/categories";
+import { categorieActionInitialState, type Categorie } from "@/lib/types";
 
 export default function CategoriesClient({ categories }: { categories: Categorie[] }) {
   const router = useRouter();
@@ -157,10 +153,13 @@ function CategorieRow({ categorie }: { categorie: Categorie }) {
 
   return (
     <li className="flex items-center justify-between gap-3 rounded-2xl bg-white p-4 shadow-sm">
-      <p className="flex items-center gap-2 text-sm font-medium text-slate-900">
+      <Link
+        href={`/dashboard/categories/${categorie.id}`}
+        className="flex items-center gap-2 text-sm font-medium text-slate-900 hover:text-accent"
+      >
         {categorie.emoji ? <span>{categorie.emoji}</span> : null}
         {categorie.nom}
-      </p>
+      </Link>
       <div className="flex gap-2 text-xs">
         <button
           type="button"

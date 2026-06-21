@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Categorie, Depense, DepenseWithCategorie, Statut } from "@/lib/types";
 import { supprimerDepense } from "@/lib/actions/depenses";
-import { formatDate, formatMontant } from "@/lib/format";
 import AjouterDepenseModal from "@/app/dashboard/_components/AjouterDepenseModal";
+import DepenseItem from "@/app/dashboard/_components/DepenseItem";
 
 export default function HistoriqueClient({
   depenses,
@@ -89,66 +89,16 @@ export default function HistoriqueClient({
         </p>
       ) : (
         <ul className="flex flex-col gap-2">
-          {depensesFiltrees.map((d) => {
-            const marge = d.statut === "vendu" && d.prix_revente != null ? d.prix_revente - d.prix_achat : null;
-            return (
-              <li key={d.id} className="rounded-2xl bg-white p-4 shadow-sm">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="flex items-center gap-2 text-sm font-medium text-slate-900">
-                      {d.categorie?.emoji ? <span>{d.categorie.emoji}</span> : null}
-                      {d.nom_article}
-                      <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                          d.statut === "vendu"
-                            ? "bg-emerald-50 text-emerald-600"
-                            : "bg-amber-50 text-amber-600"
-                        }`}
-                      >
-                        {d.statut === "vendu" ? "Vendu" : "En stock"}
-                      </span>
-                    </p>
-                    <p className="mt-1 text-xs text-slate-400">
-                      {d.categorie?.nom ?? "Sans catégorie"} · Acheté le {formatDate(d.date_achat)}
-                      {d.date_revente ? ` · Revendu le ${formatDate(d.date_revente)}` : ""}
-                    </p>
-                    {d.notes ? <p className="mt-1 text-xs text-slate-500">{d.notes}</p> : null}
-                  </div>
-
-                  <div className="flex shrink-0 flex-col items-end gap-1 text-right">
-                    <p className="text-sm font-semibold text-slate-900">
-                      {formatMontant(d.prix_achat)}
-                      {d.prix_revente != null ? ` → ${formatMontant(d.prix_revente)}` : ""}
-                    </p>
-                    {marge != null ? (
-                      <p className={`text-xs font-medium ${marge >= 0 ? "text-emerald-600" : "text-red-600"}`}>
-                        {marge >= 0 ? "+" : ""}
-                        {formatMontant(marge)}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="mt-3 flex justify-end gap-2 text-xs">
-                  <button
-                    type="button"
-                    onClick={() => setDepenseEnEdition(d)}
-                    className="rounded-lg px-2 py-1 font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-                  >
-                    Modifier
-                  </button>
-                  <button
-                    type="button"
-                    disabled={enSuppression === d.id}
-                    onClick={() => gererSuppression(d.id)}
-                    className="rounded-lg px-2 py-1 font-medium text-red-500 hover:bg-red-50 disabled:opacity-50"
-                  >
-                    Supprimer
-                  </button>
-                </div>
-              </li>
-            );
-          })}
+          {depensesFiltrees.map((d) => (
+            <DepenseItem
+              key={d.id}
+              depense={d}
+              onEdit={() => setDepenseEnEdition(d)}
+              onDelete={() => gererSuppression(d.id)}
+              enSuppression={enSuppression === d.id}
+              onVendu={() => router.refresh()}
+            />
+          ))}
         </ul>
       )}
 
