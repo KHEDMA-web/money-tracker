@@ -1,23 +1,44 @@
 # TODO
 
-## Dashboard — vues journalière / hebdomadaire / mensuelle
+## ✅ Fait
 
-- [ ] Ajouter un sélecteur de période sur le dashboard : **Jour / Semaine / Mois**
-- [ ] Recalculer les KPIs (investi, ventes, profit, ROI, stock) selon la période sélectionnée
-- [ ] Adapter le graphique d'évolution du profit pour afficher la granularité choisie (jour/semaine/mois) au lieu du seul découpage mensuel actuel
-- [ ] Vue « globale » par défaut (toutes périodes confondues) en plus des 3 vues filtrées
+- [x] Sélecteur de période Jour / Semaine / Mois / Tout sur le dashboard
+- [x] KPIs recalculés selon la période sélectionnée
+- [x] Graphique multi-courbes Investi · Ventes · Profit avec marqueurs (granularité par jour ou par mois)
+- [x] Défaut : vue "Jour" à l'ouverture
+- [x] Bug mobile : bouton flottant « + Ajouter » ne chevauche plus le contenu
+- [x] Bug mobile : titre "Money Tracker" reste sur une ligne (shrink-0 whitespace-nowrap)
+- [x] Fix revalidatePath manquant sur /dashboard/categories/[id]
+- [x] Design dark anthracite iOS (fond #1C1C1E, accent ambre #F59E0B)
+- [x] Navigation en bas style iOS avec icônes Lucide
+- [x] FAB bouton + avec glow ambre
+- [x] Police Outfit + JetBrains Mono pour les chiffres
+- [x] shadcn/ui initialisé
 
-## Mobile — stabilité parfaite
-
-- [ ] Tester et fiabiliser l'affichage sur iPhone 17 Pro Max (priorité n°1)
-- [ ] Tester sur un échantillon représentatif d'autres tailles d'écran (iPhone standard/mini, Android grand/petit écran)
-- [ ] Vérifier : zones tactiles (boutons Vendu/Modifier/Supprimer), modales (AjouterDepenseModal) en plein écran mobile, graphiques (Recharts) responsives, barre de navigation du dashboard
-- [ ] Vérifier le comportement clavier mobile sur les formulaires (inputs number/date) et le safe-area (notch / home indicator)
-- [ ] **Bug constaté** : le bouton flottant « + Ajouter une dépense » (`DashboardShell.tsx`, `fixed bottom-5 right-5`) chevauche le contenu des graphiques en bas de page sur petit écran (visible sur capture mobile 430px) — prévoir un espacement bas (`padding-bottom`) sur le contenu ou repositionner le bouton
-- [ ] **Bug constaté** : le titre « Money Tracker » du header passe sur deux lignes sur petit écran, ce qui désaligne la nav — réduire la taille ou raccourcir sur mobile
-
-## Design & KPIs — à valider avec le client
+## En attente du client
 
 - [ ] Envoyer le Google Form de proposition au client (voir `PROPOSITION_CLIENT_FORM.md`)
-- [ ] Une fois la réponse reçue : implémenter le design choisi (palette de couleurs) et les KPIs sélectionnés
+- [ ] Une fois la réponse reçue : appliquer le design choisi (palette de couleurs) et les KPIs sélectionnés
 - [ ] Implémenter le support multilingue si demandé (FR / EN / AR)
+
+## À faire ensuite
+
+### Mobile — stabilité
+
+- [ ] Tester sur iPhone réel (Safari iOS) — vérifier : nav bas, FAB, modales, graphiques Recharts
+- [ ] Tester sur Android — vérifier le rendu des polices Outfit/JetBrains Mono
+- [ ] Vérifier le safe-area (notch / home indicator) sur iPhone avec encoche
+- [ ] Vérifier les inputs date sur iOS Safari (comportement clavier, format)
+- [ ] Vérifier la modal `AjouterDepenseModal` en plein écran mobile (scroll, clavier virtuel)
+
+### Dashboard — améliorations
+
+- [ ] Remplir les jours/semaines sans activité avec des zéros dans le graphique (éviter les gaps)
+- [ ] Ajouter un indicateur visuel quand la période sélectionnée n'a aucune donnée (pas juste des zéros)
+- [ ] Objectif mensuel de profit avec barre de progression (à valider avec le client)
+
+### Fonctionnalités futures (selon retour client)
+
+- [ ] Export PDF / Excel des données
+- [ ] Notifications / rappels (article en stock depuis longtemps, objectif du mois)
+- [ ] Support multi-utilisateurs si demandé

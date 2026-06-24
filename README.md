@@ -2,7 +2,7 @@
 
 Suivi d'activité d'achat-revente (montres, voitures, sneakers…) : dépenses, marges, KPIs.
 
-Application mono-utilisateur construite avec Next.js (App Router), TypeScript, Tailwind CSS, Supabase (DB + Auth) et Recharts.
+Application mono-utilisateur construite avec Next.js (App Router), TypeScript, Tailwind CSS v4, Supabase (DB + Auth), Recharts et shadcn/ui.
 
 ## Stack
 
@@ -10,6 +10,8 @@ Application mono-utilisateur construite avec Next.js (App Router), TypeScript, T
 - Tailwind CSS v4
 - Supabase (Postgres + Auth email/password)
 - Recharts pour les graphiques
+- shadcn/ui (Base Nova) + lucide-react pour les icônes
+- Police Outfit + JetBrains Mono
 
 ## Démarrage
 
@@ -42,10 +44,19 @@ Application mono-utilisateur construite avec Next.js (App Router), TypeScript, T
 ## Fonctionnalités
 
 - Connexion mono-utilisateur (Supabase Auth)
-- Dashboard : KPIs (investi, ventes, profit, ROI, stock) + graphiques
-- Catégories : création, renommage, suppression, et page détail par catégorie listant tous ses articles
-- Articles (dépenses) : ajout, modification, suppression, recherche/filtres dans l'historique
-- Bouton « Vendu » sur chaque article en stock (historique et détail catégorie) : renseigne prix et date de revente et bascule le statut en un clic
+- Dashboard avec sélecteur de période **Jour / Semaine / Mois / Tout** — tous les KPIs et graphiques se recalculent selon la période
+- KPIs : total investi, ventes, profit, marge moyenne, ROI, stock en valeur, temps moyen de détention, top 5 ventes, catégorie la plus rentable
+- Graphique multi-courbes Investi · Ventes · Profit avec marqueurs, granularité adaptée à la période
+- Catégories : création, renommage, suppression, page détail par catégorie
+- Articles : ajout, modification, suppression, recherche et filtres dans l'historique
+- Bouton « Vendu » rapide sur chaque article en stock : saisie du prix et de la date de revente en un clic
+- Design dark anthracite iOS avec navigation en bas style mobile
+
+## Design
+
+Thème sombre anthracite style iOS (#1C1C1E), accent ambre (#F59E0B), profit vert (#4ADE80).
+Navigation en bas (Dashboard / Historique / Catégories) avec FAB central pour ajouter un article.
+Responsive mobile-first, optimisé iPhone.
 
 ## Structure
 
@@ -54,18 +65,20 @@ src/
 ├── app/
 │   ├── login/                 ← connexion (email/password)
 │   ├── dashboard/
-│   │   ├── page.tsx            ← KPIs + graphiques
+│   │   ├── page.tsx            ← KPIs + graphiques + sélecteur période
 │   │   ├── historique/         ← liste, recherche, filtres, édition/suppression, marquer vendu
 │   │   ├── categories/         ← CRUD catégories
-│   │   │   └── [id]/           ← détail d'une catégorie : ses articles, ajout/édition/suppression, marquer vendu
-│   │   └── _components/        ← modal d'ajout, carte article (DepenseItem), cartes KPI, graphiques
+│   │   │   └── [id]/           ← détail catégorie : articles, ajout/édition/suppression, marquer vendu
+│   │   └── _components/        ← DashboardShell (nav bas), PeriodeSelector, DepenseItem,
+│   │                              AjouterDepenseModal, KpiCard, graphiques
 │   └── page.tsx                ← redirige vers /dashboard
+├── components/ui/              ← composants shadcn/ui
 ├── lib/
 │   ├── actions/                ← Server Actions (depenses, categories, auth)
-│   ├── supabase/                ← clients Supabase (browser, server, proxy)
-│   ├── kpis.ts                  ← calculs des indicateurs
+│   ├── supabase/               ← clients Supabase (browser, server, proxy)
+│   ├── kpis.ts                 ← calculs des indicateurs + évolution multi-courbes
 │   └── types.ts
-└── proxy.ts                     ← protection des routes (ex middleware.ts)
+└── proxy.ts                    ← protection des routes
 ```
 
 ## Déploiement
