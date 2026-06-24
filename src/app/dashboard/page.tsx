@@ -6,6 +6,7 @@ import KpiCard from "@/app/dashboard/_components/KpiCard";
 import PeriodeSelector from "@/app/dashboard/_components/PeriodeSelector";
 import ProfitParCategorieChart from "@/app/dashboard/_components/charts/ProfitParCategorieChart";
 import EvolutionCompleteChart from "@/app/dashboard/_components/charts/EvolutionCompleteChart";
+import JourVentesChart from "@/app/dashboard/_components/charts/JourVentesChart";
 import { formatDate, formatJours, formatMontant, formatPourcentage } from "@/lib/format";
 
 type Periode = "jour" | "semaine" | "mois" | "tout";
@@ -110,9 +111,15 @@ export default async function DashboardPage({
 
       <div className="rounded-2xl bg-card p-4 shadow-sm">
         <h2 className="text-sm font-semibold text-foreground">
-          Évolution — Investi · Ventes · Profit
+          {periode === "jour"
+            ? "Ventes du jour — Profit par article"
+            : "Évolution — Investi · Ventes · Profit"}
         </h2>
-        <EvolutionCompleteChart data={evolutionComplete} />
+        {periode === "jour" ? (
+          <JourVentesChart depenses={depensesFiltrees} />
+        ) : (
+          <EvolutionCompleteChart data={evolutionComplete} />
+        )}
       </div>
 
       <div className="rounded-2xl bg-card p-4 shadow-sm">
