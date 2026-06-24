@@ -35,23 +35,24 @@ export default async function LoginPage({
           {error ? (
             <div className="mb-5 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
               {error === "invalid_credentials"
-                ? "Email ou mot de passe incorrect."
+                ? "Nom d'utilisateur ou mot de passe incorrect."
                 : error}
             </div>
           ) : null}
 
           <form action={signIn} className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-sm font-medium text-foreground">
-                Email
+              <label htmlFor="username" className="text-sm font-medium text-foreground">
+                Nom d&apos;utilisateur
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
+                id="username"
+                name="username"
+                type="text"
                 required
-                autoComplete="email"
-                placeholder="vous@exemple.com"
+                autoComplete="username"
+                autoCapitalize="none"
+                placeholder="votre_username"
                 className="h-11 rounded-xl border border-border bg-input px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </div>
