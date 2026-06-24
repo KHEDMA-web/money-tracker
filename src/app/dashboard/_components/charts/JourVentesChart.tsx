@@ -76,7 +76,7 @@ export default function JourVentesChart({ depenses }: { depenses: DepenseWithCat
             fontSize: 12,
           }}
         />
-        <Bar dataKey="profit" fill="#F59E0B" radius={[0, 8, 8, 0]} />
+        <Bar dataKey="profit" fill="#F59E0B" radius={[0, 8, 8, 0]} activeBar={{ fill: "#FCD34D", stroke: "none" }} />
       </BarChart>
     </ResponsiveContainer>
   );

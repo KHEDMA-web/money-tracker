@@ -30,7 +30,7 @@ export default function ProfitParCategorieChart({ data }: { data: ProfitParCateg
             fontSize: 12,
           }}
         />
-        <Bar dataKey="profit" fill="#F59E0B" radius={[8, 8, 0, 0]} />
+        <Bar dataKey="profit" fill="#F59E0B" radius={[8, 8, 0, 0]} activeBar={{ fill: "#FCD34D", stroke: "none" }} />
       </BarChart>
     </ResponsiveContainer>
   );
