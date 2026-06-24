@@ -16,10 +16,8 @@ export default function PeriodeSelector() {
 
   function choisir(val: string) {
     const params = new URLSearchParams(searchParams.toString());
-    if (val === "tout") params.delete("periode");
-    else params.set("periode", val);
-    const qs = params.toString();
-    router.replace(`/dashboard${qs ? `?${qs}` : ""}`);
+    params.set("periode", val);
+    router.replace(`/dashboard?${params.toString()}`);
   }
 
   return (
