@@ -8,55 +8,77 @@ export default async function LoginPage({
   const { error } = await searchParams;
 
   return (
-    <main className="flex flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-sm">
-        <h1 className="text-xl font-semibold text-slate-900">Money Tracker</h1>
-        <p className="mt-1 text-sm text-slate-500">
-          Connectez-vous pour accéder à votre suivi.
-        </p>
+    <main className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-12">
+      {/* Fond avec glow */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-30"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, oklch(0.6 0.233 277 / 0.4), transparent)",
+        }}
+      />
 
-        {error ? (
-          <p className="mt-4 rounded-xl bg-red-50 px-3 py-2 text-sm text-red-600">
-            {error}
+      <div className="relative w-full max-w-sm">
+        {/* Logo */}
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            Money<span className="text-primary">Tracker</span>
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Suivi de vos achats-reventes
           </p>
-        ) : null}
+        </div>
 
-        <form action={signIn} className="mt-6 flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-sm font-medium text-slate-700">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
-            />
-          </div>
+        {/* Card */}
+        <div className="rounded-3xl border border-border bg-card p-8 shadow-2xl">
+          {error ? (
+            <div className="mb-5 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              {error === "invalid_credentials"
+                ? "Email ou mot de passe incorrect."
+                : error}
+            </div>
+          ) : null}
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="text-sm font-medium text-slate-700">
-              Mot de passe
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              autoComplete="current-password"
-              className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
-            />
-          </div>
+          <form action={signIn} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="email" className="text-sm font-medium text-foreground">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder="vous@exemple.com"
+                className="h-11 rounded-xl border border-border bg-input px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="mt-2 rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
-          >
-            Se connecter
-          </button>
-        </form>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="password" className="text-sm font-medium text-foreground">
+                Mot de passe
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                autoComplete="current-password"
+                placeholder="••••••••"
+                className="h-11 rounded-xl border border-border bg-input px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="mt-1 h-11 w-full rounded-xl bg-primary text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 active:scale-[0.98]"
+            >
+              Se connecter
+            </button>
+          </form>
+        </div>
       </div>
     </main>
   );

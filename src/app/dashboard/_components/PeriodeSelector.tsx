@@ -1,0 +1,43 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+
+const PERIODES = [
+  { value: "tout", label: "Tout" },
+  { value: "mois", label: "Mois" },
+  { value: "semaine", label: "Semaine" },
+  { value: "jour", label: "Jour" },
+] as const;
+
+export default function PeriodeSelector() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const periode = searchParams.get("periode") ?? "jour";
+
+  function choisir(val: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (val === "tout") params.delete("periode");
+    else params.set("periode", val);
+    const qs = params.toString();
+    router.replace(`/dashboard${qs ? `?${qs}` : ""}`);
+  }
+
+  return (
+    <div className="flex gap-1 rounded-xl bg-slate-100 p-1">
+      {PERIODES.map((p) => (
+        <button
+          key={p.value}
+          type="button"
+          onClick={() => choisir(p.value)}
+          className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
+            periode === p.value
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-900"
+          }`}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+  );
+}

@@ -1,0 +1,24 @@
+<svg width="530" height="160" viewBox="0 0 530 160" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <!-- Fond blanc -->
+  <rect width="530" height="160" fill="#ffffff" rx="12"/>
+
+  <!-- Titre -->
+  <text x="20" y="30" font-size="15" font-weight="700" fill="#111111">Design — Anthracite iOS</text>
+
+  <!-- Swatch 1 : Background #1C1C1E -->
+  <rect x="20" y="48" width="145" height="80" rx="10" fill="#1C1C1E"/>
+  <rect x="20" y="48" width="145" height="80" rx="10" fill="none" stroke="#ddd" stroke-width="1"/>
+  <text x="92" y="143" font-size="11" font-weight="500" fill="#555" text-anchor="middle">#1C1C1E</text>
+
+  <!-- Swatch 2 : Accent ambre #F59E0B -->
+  <rect x="175" y="48" width="145" height="80" rx="10" fill="#F59E0B"/>
+  <text x="247" y="143" font-size="11" font-weight="500" fill="#555" text-anchor="middle">#F59E0B</text>
+
+  <!-- Swatch 3 : Profit vert #4ADE80 -->
+  <rect x="330" y="48" width="80" height="80" rx="10" fill="#4ADE80"/>
+  <text x="370" y="143" font-size="11" font-weight="500" fill="#555" text-anchor="middle">#4ADE80</text>
+
+  <!-- Swatch 4 : Texte #E5E5EA -->
+  <rect x="420" y="48" width="90" height="80" rx="10" fill="#E5E5EA"/>
+  <text x="465" y="143" font-size="11" font-weight="500" fill="#555" text-anchor="middle">#E5E5EA</text>
+</svg>

@@ -22,6 +22,13 @@ export type ProfitParMois = {
   profit: number;
 };
 
+export type EvolutionComplete = {
+  mois: string; // YYYY-MM
+  investi: number;
+  ventes: number;
+  profit: number;
+};
+
 export type Kpis = {
   totalInvesti: number;
   totalVentes: number;
@@ -37,6 +44,25 @@ export type Kpis = {
   top5Ventes: DepenseWithCategorie[];
   categoriePlusRentable: ProfitParCategorie | null;
 };
+
+export function calculerEvolutionComplete(
+  depenses: DepenseWithCategorie[],
+  periode: string
+): EvolutionComplete[] {
+  const map = new Map<string, EvolutionComplete>();
+  for (const d of depenses) {
+    // "tout" et "mois" groupent par mois ; "semaine" et "jour" groupent par jour
+    const key = periode === "tout" ? d.date_achat.slice(0, 7) : d.date_achat.slice(0, 10);
+    const entry = map.get(key) ?? { mois: key, investi: 0, ventes: 0, profit: 0 };
+    entry.investi += d.prix_achat;
+    if (d.statut === "vendu" && d.prix_revente != null) {
+      entry.ventes += d.prix_revente;
+      entry.profit += d.prix_revente - d.prix_achat;
+    }
+    map.set(key, entry);
+  }
+  return Array.from(map.values()).sort((a, b) => a.mois.localeCompare(b.mois));
+}
 
 export function calculerKpis(depenses: DepenseWithCategorie[]): Kpis {
   const vendus = depenses.filter((d) => d.statut === "vendu" && d.prix_revente != null);

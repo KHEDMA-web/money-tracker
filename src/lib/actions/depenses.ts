@@ -100,4 +100,5 @@ export async function marquerVendu(id: string, prixRevente: number, dateRevente:
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/historique");
   revalidatePath("/dashboard/categories");
+  revalidatePath("/dashboard/categories/[id]", "page");
 }

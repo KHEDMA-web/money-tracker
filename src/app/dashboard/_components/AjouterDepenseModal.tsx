@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
 import { creerDepense, modifierDepense } from "@/lib/actions/depenses";
 import { creerCategorie } from "@/lib/actions/categories";
 import {
@@ -13,6 +14,11 @@ import {
 } from "@/lib/types";
 
 const NOUVELLE_CATEGORIE = "__nouvelle__";
+
+const inputCls =
+  "h-11 w-full rounded-xl border border-border bg-input px-3 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
+
+const labelCls = "text-xs font-semibold uppercase tracking-wider text-muted-foreground";
 
 export default function AjouterDepenseModal({
   onClose,
@@ -61,12 +67,10 @@ export default function AjouterDepenseModal({
     formData.set("nom", nouvelleCategorieNom);
     const result = await creerCategorie(categorieActionInitialState, formData);
     setCatPending(false);
-
     if (result.status === "error") {
       setCatError(result.error ?? "Erreur lors de la création.");
       return;
     }
-
     setCategorieSelectionnee(result.id ?? "");
     setNouvelleCategorieOuverte(false);
     setNouvelleCategorieNom("");
@@ -75,19 +79,23 @@ export default function AjouterDepenseModal({
   }
 
   return (
-    <div className="fixed inset-0 z-40 flex items-end justify-center bg-slate-900/40 p-0 sm:items-center sm:p-4">
-      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-2xl bg-white p-6 shadow-xl sm:rounded-2xl">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">
-            {enEdition ? "Modifier la dépense" : "Ajouter une dépense"}
+    <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/60 backdrop-blur-sm sm:items-center sm:p-4">
+      <div className="max-h-[92vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-border bg-card shadow-2xl sm:rounded-3xl">
+        {/* Handle mobile */}
+        <div className="flex justify-center pt-3 sm:hidden">
+          <div className="h-1 w-10 rounded-full bg-border" />
+        </div>
+
+        <div className="flex items-center justify-between px-6 pb-2 pt-4">
+          <h2 className="text-base font-bold text-foreground">
+            {enEdition ? "Modifier l'article" : "Ajouter un article"}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-            aria-label="Fermer"
+            className="flex h-8 w-8 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
-            ✕
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -96,14 +104,12 @@ export default function AjouterDepenseModal({
           onSubmit={(e) => {
             if (nouvelleCategorieOuverte) e.preventDefault();
           }}
-          className="mt-4 flex flex-col gap-4"
+          className="flex flex-col gap-4 px-6 pb-8 pt-2"
         >
-          <div className="flex flex-col gap-1">
-            <label htmlFor="categorie_id" className="text-sm font-medium text-slate-700">
-              Catégorie
-            </label>
+          {/* Catégorie */}
+          <div className="flex flex-col gap-1.5">
+            <label className={labelCls}>Catégorie</label>
             <select
-              id="categorie_id"
               name="categorie_id"
               value={nouvelleCategorieOuverte ? NOUVELLE_CATEGORIE : categorieSelectionnee}
               onChange={(e) => {
@@ -114,7 +120,7 @@ export default function AjouterDepenseModal({
                   setCategorieSelectionnee(e.target.value);
                 }
               }}
-              className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+              className={inputCls}
             >
               <option value="">Sans catégorie</option>
               {categories.map((c) => (
@@ -128,71 +134,63 @@ export default function AjouterDepenseModal({
           </div>
 
           {nouvelleCategorieOuverte ? (
-            <div className="flex flex-col gap-2 rounded-xl bg-slate-50 p-3">
+            <div className="flex flex-col gap-2 rounded-2xl border border-border bg-secondary/50 p-3">
               <div className="flex gap-2">
                 <input
                   value={nouvelleCategorieEmoji}
                   onChange={(e) => setNouvelleCategorieEmoji(e.target.value)}
                   placeholder="🏷️"
                   maxLength={4}
-                  className="w-16 rounded-xl border border-slate-200 px-2 py-2 text-center text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                  className="h-11 w-14 rounded-xl border border-border bg-input px-2 text-center text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
                 <input
                   value={nouvelleCategorieNom}
                   onChange={(e) => setNouvelleCategorieNom(e.target.value)}
                   placeholder="Nom de la catégorie"
-                  className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                  className={inputCls}
                 />
               </div>
-              {catError ? <p className="text-xs text-red-600">{catError}</p> : null}
+              {catError ? <p className="text-xs text-destructive">{catError}</p> : null}
               <button
                 type="button"
                 disabled={catPending}
                 onClick={creerNouvelleCategorie}
-                className="self-start rounded-xl bg-slate-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-slate-700 disabled:opacity-50"
+                className="self-start rounded-xl bg-foreground px-3 py-1.5 text-xs font-semibold text-background transition-opacity hover:opacity-80 disabled:opacity-40"
               >
                 Créer la catégorie
               </button>
             </div>
           ) : null}
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="nom_article" className="text-sm font-medium text-slate-700">
-              Nom / description de l&apos;article
-            </label>
+          {/* Nom */}
+          <div className="flex flex-col gap-1.5">
+            <label className={labelCls}>Article</label>
             <input
-              id="nom_article"
               name="nom_article"
               required
               defaultValue={depense?.nom_article}
               placeholder="Rolex Submariner 116610"
-              className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+              className={inputCls}
             />
           </div>
 
+          {/* Prix */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="prix_achat" className="text-sm font-medium text-slate-700">
-                Prix d&apos;achat (DA)
-              </label>
+            <div className="flex flex-col gap-1.5">
+              <label className={labelCls}>Prix achat (DA)</label>
               <input
-                id="prix_achat"
                 name="prix_achat"
                 type="number"
                 min="0"
                 step="0.01"
                 required
                 defaultValue={depense?.prix_achat}
-                className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                className={inputCls + " font-mono"}
               />
             </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="prix_revente" className="text-sm font-medium text-slate-700">
-                Prix de revente (DA)
-              </label>
+            <div className="flex flex-col gap-1.5">
+              <label className={labelCls}>Prix revente (DA)</label>
               <input
-                id="prix_revente"
                 name="prix_revente"
                 type="number"
                 min="0"
@@ -200,73 +198,68 @@ export default function AjouterDepenseModal({
                 defaultValue={depense?.prix_revente ?? undefined}
                 onChange={(e) => setVendu(e.target.value.trim() !== "")}
                 placeholder="Non vendu"
-                className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                className={inputCls + " font-mono"}
               />
             </div>
           </div>
 
+          {/* Dates */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="date_achat" className="text-sm font-medium text-slate-700">
-                Date d&apos;achat
-              </label>
+            <div className="flex flex-col gap-1.5">
+              <label className={labelCls}>Date achat</label>
               <input
-                id="date_achat"
                 name="date_achat"
                 type="date"
                 required
                 defaultValue={depense?.date_achat}
-                className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                className={inputCls}
               />
             </div>
-
             {vendu ? (
-              <div className="flex flex-col gap-1">
-                <label htmlFor="date_revente" className="text-sm font-medium text-slate-700">
-                  Date de revente
-                </label>
+              <div className="flex flex-col gap-1.5">
+                <label className={labelCls}>Date revente</label>
                 <input
-                  id="date_revente"
                   name="date_revente"
                   type="date"
                   defaultValue={depense?.date_revente ?? undefined}
-                  className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+                  className={inputCls}
                 />
               </div>
             ) : null}
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label htmlFor="notes" className="text-sm font-medium text-slate-700">
-              Notes
-            </label>
+          {/* Notes */}
+          <div className="flex flex-col gap-1.5">
+            <label className={labelCls}>Notes</label>
             <textarea
-              id="notes"
               name="notes"
               rows={2}
               defaultValue={depense?.notes ?? undefined}
-              className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+              placeholder="Optionnel"
+              className="w-full rounded-xl border border-border bg-input px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
             />
           </div>
 
           {state.status === "error" ? (
-            <p className="rounded-xl bg-red-50 px-3 py-2 text-sm text-red-600">{state.error}</p>
+            <div className="rounded-xl border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {state.error}
+            </div>
           ) : null}
 
-          <div className="mt-2 flex justify-end gap-2">
+          <div className="mt-1 flex gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl px-4 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100"
+              className="flex-1 h-11 rounded-xl border border-border text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={isPending || nouvelleCategorieOuverte}
-              className="rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+              className="flex-1 h-11 rounded-xl bg-primary text-sm font-semibold text-primary-foreground transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-40"
             >
-              {isPending ? "Enregistrement…" : enEdition ? "Enregistrer" : "Ajouter"}
+              {isPending ? "…" : enEdition ? "Enregistrer" : "Ajouter"}
             </button>
           </div>
         </form>
