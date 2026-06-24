@@ -38,7 +38,7 @@ export default function CategorieDetailClient({
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <Link href="/dashboard/categories" className="text-sm text-muted-foreground hover:text-slate-600">
+        <Link href="/dashboard/categories" className="text-sm text-muted-foreground hover:text-foreground">
           ← Catégories
         </Link>
         <div className="mt-1 flex items-center justify-between gap-3">

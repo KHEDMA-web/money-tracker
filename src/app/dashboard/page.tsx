@@ -123,7 +123,7 @@ export default async function DashboardPage({
         {kpis.top5Ventes.length === 0 ? (
           <p className="mt-3 text-sm text-muted-foreground">Aucune vente sur cette période.</p>
         ) : (
-          <ul className="mt-3 divide-y divide-slate-100">
+          <ul className="mt-3 divide-y divide-border">
             {kpis.top5Ventes.map((d) => (
               <li key={d.id} className="flex items-center justify-between gap-3 py-2 text-sm">
                 <div>
