@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 import { creerCategorie, modifierCategorie, supprimerCategorie } from "@/lib/actions/categories";
 import { categorieActionInitialState, type Categorie } from "@/lib/types";
 
@@ -111,7 +112,7 @@ function CategorieRow({ categorie }: { categorie: Categorie }) {
 
   if (enEdition) {
     return (
-      <li className="rounded-2xl bg-white p-4 shadow-sm">
+      <li className="rounded-2xl border border-primary/30 bg-card p-4">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -123,58 +124,70 @@ function CategorieRow({ categorie }: { categorie: Categorie }) {
             name="emoji"
             maxLength={4}
             defaultValue={categorie.emoji ?? ""}
-            className="w-16 rounded-xl border border-slate-200 px-2 py-2 text-center text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+            className="w-16 rounded-xl border border-border bg-input px-2 py-2 text-center outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
           />
           <input
             name="nom"
             required
             defaultValue={categorie.nom}
-            className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+            autoFocus
+            className="flex-1 rounded-xl border border-border bg-input px-3 py-2 outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
           />
           <button
             type="submit"
             disabled={modifierPending}
-            className="rounded-xl bg-accent px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+            className="rounded-xl bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             Enregistrer
           </button>
           <button
             type="button"
             onClick={() => setEnEdition(false)}
-            className="rounded-xl px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100"
+            className="rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary"
           >
             Annuler
           </button>
-          {modifierError ? <p className="w-full text-sm text-red-600">{modifierError}</p> : null}
+          {modifierError ? <p className="w-full text-sm text-destructive">{modifierError}</p> : null}
         </form>
       </li>
     );
   }
 
   return (
-    <li className="flex items-center justify-between gap-3 rounded-2xl bg-white p-4 shadow-sm">
+    <li className="relative flex items-center rounded-2xl border border-border bg-card transition-colors active:bg-secondary/50">
+      {/* Zone cliquable principale → ouvre la catégorie */}
       <Link
         href={`/dashboard/categories/${categorie.id}`}
-        className="flex items-center gap-2 text-sm font-medium text-slate-900 hover:text-accent"
+        className="flex flex-1 items-center gap-3 px-4 py-4 pr-2"
       >
-        {categorie.emoji ? <span>{categorie.emoji}</span> : null}
-        {categorie.nom}
+        <span className="text-xl leading-none">
+          {categorie.emoji ?? "📁"}
+        </span>
+        <span className="text-sm font-semibold text-foreground">{categorie.nom}</span>
+        <ChevronRight className="ml-auto h-4 w-4 shrink-0 text-muted-foreground" />
       </Link>
-      <div className="flex gap-2 text-xs">
+
+      {/* Séparateur vertical */}
+      <div className="h-8 w-px shrink-0 bg-border" />
+
+      {/* Icônes modifier / supprimer */}
+      <div className="flex items-center gap-0.5 px-2">
         <button
           type="button"
           onClick={() => setEnEdition(true)}
-          className="rounded-lg px-2 py-1 font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+          className="rounded-xl p-2.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+          title="Modifier"
         >
-          Modifier
+          <Pencil className="h-4 w-4" />
         </button>
         <button
           type="button"
           disabled={enSuppression}
           onClick={gererSuppression}
-          className="rounded-lg px-2 py-1 font-medium text-red-500 hover:bg-red-50 disabled:opacity-50"
+          className="rounded-xl p-2.5 text-destructive transition-colors hover:bg-[var(--loss-bg)] disabled:opacity-40"
+          title="Supprimer"
         >
-          Supprimer
+          <Trash2 className="h-4 w-4" />
         </button>
       </div>
     </li>
