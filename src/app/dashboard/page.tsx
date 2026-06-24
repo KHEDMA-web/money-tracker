@@ -30,14 +30,16 @@ function filtrerParPeriode(
     debut = new Date(auj.getFullYear(), auj.getMonth(), 1);
   }
 
-  return depenses.filter((d) => new Date(d.date_achat) >= debut);
+  return depenses.filter((d) => {
+    const [y, m, day] = d.date_achat.split("-").map(Number);
+    return new Date(y, m - 1, day) >= debut;
+  });
 }
 
-function labelPeriode(periode: Periode): string {
+function labelPeriode(periode: Exclude<Periode, "tout">): string {
   if (periode === "jour") return "aujourd'hui";
   if (periode === "semaine") return "ces 7 derniers jours";
-  if (periode === "mois") return "ce mois-ci";
-  return null as unknown as string;
+  return "ce mois-ci";
 }
 
 export default async function DashboardPage({
@@ -63,7 +65,7 @@ export default async function DashboardPage({
 
   const sousTitre =
     periode !== "tout"
-      ? `Vue d'ensemble — ${labelPeriode(periode)}`
+      ? `Vue d'ensemble — ${labelPeriode(periode as Exclude<Periode, "tout">)}`
       : "Vue d'ensemble de votre activité.";
 
   return (

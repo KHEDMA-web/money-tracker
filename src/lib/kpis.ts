@@ -74,7 +74,12 @@ export function calculerKpis(depenses: DepenseWithCategorie[]): Kpis {
   const profitTotal = totalVentes - coutAchatVendus;
 
   const margeMoyennePct =
-    vendus.length > 0 ? (profitTotal / vendus.length) / (coutAchatVendus / vendus.length) * 100 : null;
+    vendus.length > 0
+      ? vendus.reduce((sum, d) => {
+          if (d.prix_achat === 0) return sum;
+          return sum + (profit(d) / d.prix_achat) * 100;
+        }, 0) / vendus.length
+      : null;
   const roiGlobalPct = coutAchatVendus > 0 ? (profitTotal / coutAchatVendus) * 100 : null;
 
   const valeurStock = enStock.reduce((sum, d) => sum + d.prix_achat, 0);

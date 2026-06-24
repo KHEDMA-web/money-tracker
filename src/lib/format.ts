@@ -9,7 +9,8 @@ export function formatPourcentage(valeur: number | null): string {
 
 export function formatDate(valeur: string | null): string {
   if (!valeur) return "—";
-  return new Intl.DateTimeFormat("fr-FR", { dateStyle: "medium" }).format(new Date(valeur));
+  const [y, m, d] = valeur.split("-").map(Number);
+  return new Intl.DateTimeFormat("fr-FR", { dateStyle: "medium" }).format(new Date(y, m - 1, d));
 }
 
 export function formatJours(valeur: number | null): string {

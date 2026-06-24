@@ -38,6 +38,13 @@ function parseDepenseForm(formData: FormData) {
   };
 }
 
+function revalidateTout() {
+  revalidatePath("/dashboard");
+  revalidatePath("/dashboard/historique");
+  revalidatePath("/dashboard/categories");
+  revalidatePath("/dashboard/categories/[id]", "page");
+}
+
 export async function creerDepense(
   _prevState: DepenseActionState,
   formData: FormData
@@ -51,8 +58,7 @@ export async function creerDepense(
     return { status: "error", error: e instanceof Error ? e.message : "Erreur inconnue." };
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/historique");
+  revalidateTout();
   return { status: "success" };
 }
 
@@ -70,8 +76,7 @@ export async function modifierDepense(
     return { status: "error", error: e instanceof Error ? e.message : "Erreur inconnue." };
   }
 
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/historique");
+  revalidateTout();
   return { status: "success" };
 }
 
@@ -80,8 +85,7 @@ export async function supprimerDepense(id: string) {
   const { error } = await supabase.from("depenses").delete().eq("id", id);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/historique");
+  revalidateTout();
 }
 
 export async function marquerVendu(id: string, prixRevente: number, dateRevente: string) {
@@ -97,8 +101,5 @@ export async function marquerVendu(id: string, prixRevente: number, dateRevente:
     .eq("id", id);
   if (error) throw new Error(error.message);
 
-  revalidatePath("/dashboard");
-  revalidatePath("/dashboard/historique");
-  revalidatePath("/dashboard/categories");
-  revalidatePath("/dashboard/categories/[id]", "page");
+  revalidateTout();
 }

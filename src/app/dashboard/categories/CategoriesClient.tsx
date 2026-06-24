@@ -62,7 +62,7 @@ export default function CategoriesClient({ categories }: { categories: Categorie
       </form>
 
       {categories.length === 0 ? (
-        <p className="rounded-2xl bg-card p-6 text-center text-sm text-slate-400 shadow-sm">
+        <p className="rounded-2xl bg-card p-6 text-center text-sm text-muted-foreground shadow-sm">
           Aucune catégorie pour le moment.
         </p>
       ) : (

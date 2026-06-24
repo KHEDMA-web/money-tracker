@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import DashboardShell from "@/app/dashboard/_components/DashboardShell";
 import type { Categorie } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {
