@@ -7,8 +7,8 @@ export async function signIn(formData: FormData) {
   const username = String(formData.get("username") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  const authUsername = process.env.AUTH_USERNAME;
-  const authEmail    = process.env.AUTH_EMAIL;
+  const authUsername = process.env.AUTH_USERNAME?.trim();
+  const authEmail    = process.env.AUTH_EMAIL?.trim();
 
   // Si AUTH_USERNAME est défini, on valide le nom d'utilisateur
   if (authUsername && username !== authUsername) {
@@ -16,7 +16,7 @@ export async function signIn(formData: FormData) {
   }
 
   // On utilise AUTH_EMAIL si défini, sinon on traite le username comme un email
-  const email = authEmail || username;
+  const email = (authEmail || username).trim();
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
