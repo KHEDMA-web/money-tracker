@@ -70,8 +70,8 @@ export default async function DashboardPage({
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold text-slate-900">Dashboard</h1>
-          <p className="text-sm text-slate-500">{sousTitre}</p>
+          <h1 className="text-xl font-semibold text-foreground">Dashboard</h1>
+          <p className="text-sm text-muted-foreground">{sousTitre}</p>
         </div>
         <Suspense fallback={null}>
           <PeriodeSelector />
@@ -99,39 +99,39 @@ export default async function DashboardPage({
       {kpis.categoriePlusRentable ? (
         <div className="rounded-2xl bg-accent/10 p-4">
           <p className="text-xs font-medium text-accent">Catégorie la plus rentable</p>
-          <p className="mt-1 text-lg font-semibold text-slate-900">
+          <p className="mt-1 text-lg font-semibold text-foreground">
             {kpis.categoriePlusRentable.emoji ? `${kpis.categoriePlusRentable.emoji} ` : ""}
             {kpis.categoriePlusRentable.nom} — {formatMontant(kpis.categoriePlusRentable.profit)}
           </p>
         </div>
       ) : null}
 
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-900">
+      <div className="rounded-2xl bg-card p-4 shadow-sm">
+        <h2 className="text-sm font-semibold text-foreground">
           Évolution — Investi · Ventes · Profit
         </h2>
         <EvolutionCompleteChart data={evolutionComplete} />
       </div>
 
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-900">Profit par catégorie</h2>
+      <div className="rounded-2xl bg-card p-4 shadow-sm">
+        <h2 className="text-sm font-semibold text-foreground">Profit par catégorie</h2>
         <ProfitParCategorieChart data={kpis.profitParCategorie} />
       </div>
 
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-900">Top 5 meilleures ventes</h2>
+      <div className="rounded-2xl bg-card p-4 shadow-sm">
+        <h2 className="text-sm font-semibold text-foreground">Top 5 meilleures ventes</h2>
         {kpis.top5Ventes.length === 0 ? (
-          <p className="mt-3 text-sm text-slate-400">Aucune vente sur cette période.</p>
+          <p className="mt-3 text-sm text-muted-foreground">Aucune vente sur cette période.</p>
         ) : (
           <ul className="mt-3 divide-y divide-slate-100">
             {kpis.top5Ventes.map((d) => (
               <li key={d.id} className="flex items-center justify-between gap-3 py-2 text-sm">
                 <div>
-                  <p className="font-medium text-slate-900">
+                  <p className="font-medium text-foreground">
                     {d.categorie?.emoji ? `${d.categorie.emoji} ` : ""}
                     {d.nom_article}
                   </p>
-                  <p className="text-xs text-slate-400">{formatDate(d.date_revente)}</p>
+                  <p className="text-xs text-muted-foreground">{formatDate(d.date_revente)}</p>
                 </div>
                 <span className="font-semibold text-accent">
                   {formatMontant((d.prix_revente ?? 0) - d.prix_achat)}

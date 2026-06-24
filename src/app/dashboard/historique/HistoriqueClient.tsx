@@ -48,8 +48,8 @@ export default function HistoriqueClient({
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Historique</h1>
-        <p className="text-sm text-slate-500">{depenses.length} article(s) au total.</p>
+        <h1 className="text-xl font-semibold text-foreground">Historique</h1>
+        <p className="text-sm text-muted-foreground">{depenses.length} article(s) au total.</p>
       </div>
 
       <div className="flex flex-col gap-2 sm:flex-row">
@@ -57,12 +57,12 @@ export default function HistoriqueClient({
           value={recherche}
           onChange={(e) => setRecherche(e.target.value)}
           placeholder="Rechercher un article…"
-          className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+          className="flex-1 rounded-xl border border-border px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
         />
         <select
           value={filtreCategorie}
           onChange={(e) => setFiltreCategorie(e.target.value)}
-          className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+          className="rounded-xl border border-border px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
         >
           <option value="">Toutes les catégories</option>
           {categories.map((c) => (
@@ -75,7 +75,7 @@ export default function HistoriqueClient({
         <select
           value={filtreStatut}
           onChange={(e) => setFiltreStatut(e.target.value as "" | Statut)}
-          className="rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+          className="rounded-xl border border-border px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
         >
           <option value="">Tous les statuts</option>
           <option value="en_stock">En stock</option>
@@ -84,7 +84,7 @@ export default function HistoriqueClient({
       </div>
 
       {depensesFiltrees.length === 0 ? (
-        <p className="rounded-2xl bg-white p-6 text-center text-sm text-slate-400 shadow-sm">
+        <p className="rounded-2xl bg-card p-6 text-center text-sm text-muted-foreground shadow-sm">
           Aucune dépense ne correspond à ces filtres.
         </p>
       ) : (

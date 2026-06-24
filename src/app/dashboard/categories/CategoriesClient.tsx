@@ -22,37 +22,37 @@ export default function CategoriesClient({ categories }: { categories: Categorie
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Catégories</h1>
-        <p className="text-sm text-slate-500">{categories.length} catégorie(s).</p>
+        <h1 className="text-xl font-semibold text-foreground">Catégories</h1>
+        <p className="text-sm text-muted-foreground">{categories.length} catégorie(s).</p>
       </div>
 
       <form
         key={creerState.status === "success" ? "reset" : "form"}
         action={creerFormAction}
-        className="flex flex-wrap items-end gap-2 rounded-2xl bg-white p-4 shadow-sm"
+        className="flex flex-wrap items-end gap-2 rounded-2xl bg-card p-4 shadow-sm"
       >
         <div className="flex flex-col gap-1">
-          <label className="text-xs font-medium text-slate-700">Emoji</label>
+          <label className="text-xs font-medium text-muted-foreground">Emoji</label>
           <input
             name="emoji"
             maxLength={4}
             placeholder="⌚️"
-            className="w-16 rounded-xl border border-slate-200 px-2 py-2 text-center text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+            className="w-16 rounded-xl border border-border px-2 py-2 text-center text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
           />
         </div>
         <div className="flex flex-1 flex-col gap-1">
-          <label className="text-xs font-medium text-slate-700">Nouvelle catégorie</label>
+          <label className="text-xs font-medium text-muted-foreground">Nouvelle catégorie</label>
           <input
             name="nom"
             required
             placeholder="Montres"
-            className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm outline-none focus:border-accent focus:ring-1 focus:ring-accent"
+            className="w-full rounded-xl border border-border px-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
           />
         </div>
         <button
           type="submit"
           disabled={creerPending}
-          className="rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+          className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50"
         >
           Ajouter
         </button>
@@ -62,7 +62,7 @@ export default function CategoriesClient({ categories }: { categories: Categorie
       </form>
 
       {categories.length === 0 ? (
-        <p className="rounded-2xl bg-white p-6 text-center text-sm text-slate-400 shadow-sm">
+        <p className="rounded-2xl bg-card p-6 text-center text-sm text-slate-400 shadow-sm">
           Aucune catégorie pour le moment.
         </p>
       ) : (

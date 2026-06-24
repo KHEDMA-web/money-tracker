@@ -38,27 +38,27 @@ export default function CategorieDetailClient({
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <Link href="/dashboard/categories" className="text-sm text-slate-400 hover:text-slate-600">
+        <Link href="/dashboard/categories" className="text-sm text-muted-foreground hover:text-slate-600">
           ← Catégories
         </Link>
         <div className="mt-1 flex items-center justify-between gap-3">
-          <h1 className="flex items-center gap-2 text-xl font-semibold text-slate-900">
+          <h1 className="flex items-center gap-2 text-xl font-semibold text-foreground">
             {categorie.emoji ? <span>{categorie.emoji}</span> : null}
             {categorie.nom}
           </h1>
           <button
             type="button"
             onClick={() => setAjoutOuvert(true)}
-            className="rounded-xl bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
           >
             Ajouter un article
           </button>
         </div>
-        <p className="text-sm text-slate-500">{depenses.length} article(s) dans cette catégorie.</p>
+        <p className="text-sm text-muted-foreground">{depenses.length} article(s) dans cette catégorie.</p>
       </div>
 
       {depenses.length === 0 ? (
-        <p className="rounded-2xl bg-white p-6 text-center text-sm text-slate-400 shadow-sm">
+        <p className="rounded-2xl bg-card p-6 text-center text-sm text-muted-foreground shadow-sm">
           Aucun article dans cette catégorie pour le moment.
         </p>
       ) : (
